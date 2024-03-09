@@ -20,7 +20,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: black;
     margin-bottom: 20px;
 }
 
@@ -56,13 +56,13 @@ h1 {
     display: inline-block;
     font-size: 16px;
     margin-left: 10px;
-    color: #333;
+    color: black;
 }
 
 .submit-button {
     padding: 15px;
     font-size: 18px;
-    color: #fff;
+    color: black;
     background-color: #007bff;
     border: none;
     border-radius: 8px;
@@ -87,7 +87,7 @@ h1 {
     display: inline-block;
     padding: 15px 25px;
     font-size: 18px;
-    color: #fff;
+    color: black;
     background-color: #28a745;
     text-decoration: none;
     border-radius: 8px;
@@ -107,14 +107,14 @@ h1 {
 }
 
 .prediction h2 {
-    color: #333;
+    color: black;
     margin-bottom: 10px;
 }
 
 .prediction p {
     padding: 1rem;
     background-color: linear-gradient(to right, #ff7373, #ff5196);
-    color: #fff;
+    color: black;
     border-radius: 8px;
     width: 100%;
     text-align: center;
