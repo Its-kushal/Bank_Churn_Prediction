@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churn Prediction Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <h1>Churn Prediction Form</h1>
+    <div class="container">
+        <form action="/predict" method="POST" class="form">
+            <div class="form-group">
+                <label for="credit_score">Credit Score:</label>
+                <input type="number" id="credit_score" name="credit_score" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="tenure">Tenure:</label>
+                <input type="number" id="tenure" name="tenure" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="balance">Balance:</label>
+                <input type="number" id="balance" name="balance" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="num_of_products">Number of Products:</label>
+                <input type="number" id="num_of_products" name="num_of_products" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="estimated_salary">Estimated Salary:</label>
+                <input type="number" id="estimated_salary" name="estimated_salary" class="input-field" required>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="has_credit_card" name="has_credit_card">
+                <label for="has_credit_card" class="checkbox-label">Has Credit Card</label>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="is_active_member" name="is_active_member">
+                <label for="is_active_member" class="checkbox-label">Is Active Member</label>
+            </div>
+            <button type="submit" class="submit-button">Predict Churn & Provide Retention Offers</button>
+        </form>
+        <!-- <div class="view-graph">
+            <a href="/graph" class="button">View Accuracy Graph</a>
+        </div> -->
+    </div>
+</body>
+</html>
