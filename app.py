@@ -54,6 +54,10 @@ best_classifier = max(classifiers, key=classifiers.get)
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/form')
+def show_form():
     return render_template('form.html')
 
 @app.route('/predict', methods=['POST'])
@@ -82,7 +86,7 @@ def predict():
             churn_prediction = logreg_classifier.predict(scaler.transform(input_data))
         
         offers = generate_retention_offers(input_data)
-        
+        print("Generated offers:", offers)  # Debug print statement
         return render_template('result.html', churn_prediction=churn_prediction[0], offers=offers)
     
     except Exception as e:
@@ -90,13 +94,38 @@ def predict():
 
 def generate_retention_offers(input_data):
     offers = []
-    if input_data[0][5] == 1:
-        offers.append('Offering credit card upgrade with better benefits.')
-    if input_data[0][6] == 1:
-        offers.append('Offering loyalty rewards for staying active.')
-    if input_data[0][3] > 100000:
-        offers.append('Providing personalized investment opportunities.')
+    credit_score, age, tenure, balance, num_of_products, has_credit_card, is_active_member, estimated_salary, _, _, _ = input_data[0]
+
+    # Offer based on credit score
+    if credit_score < 600:
+        offers.append('Offering credit score improvement program.')
+    elif credit_score > 800:
+        offers.append('Providing exclusive VIP banking services.')
+
+    # Offer based on age
+    if age > 60:
+        offers.append('Special retirement planning services.')
+
+    # Offer based on tenure and balance
+    if tenure > 5 and balance > 50000:
+        offers.append('Exclusive benefits for long-time customers with high balance.')
+
+    # Offer based on number of products
+    if num_of_products > 2:
+        offers.append('Upgrade to premium account for free.')
+
+    # Offer based on estimated salary
+    if estimated_salary > 100000:
+        offers.append('Personalized investment opportunities.')
+
+    # Common offers
+    if has_credit_card == 1:
+        offers.append('Upgrade credit card with better rewards.')
+    if is_active_member == 1:
+        offers.append('Loyalty rewards for staying active.')
+
     return offers
+
 
 if __name__ == '__main__':
     app.run(debug=True)
