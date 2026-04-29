@@ -11,46 +11,46 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the dataset
-data = pd.read_csv('churn.csv')
+# # Load the dataset
+# data = pd.read_csv('churn.csv')
 
-# Preprocessing
-data = data.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
-label_encoder = LabelEncoder()
-data['Gender'] = label_encoder.fit_transform(data['Gender'])
-data = pd.get_dummies(data, columns=['Geography'], drop_first=True)
-X = data.drop('Exited', axis=1)
-y = data['Exited']
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+# # Preprocessing
+# data = data.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+# label_encoder = LabelEncoder()
+# data['Gender'] = label_encoder.fit_transform(data['Gender'])
+# data = pd.get_dummies(data, columns=['Geography'], drop_first=True)
+# X = data.drop('Exited', axis=1)
+# y = data['Exited']
+# scaler = StandardScaler()
+# X_scaled = scaler.fit_transform(X)
 
-# Splitting data for model evaluation
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+# # Splitting data for model evaluation
+# X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
-# Train Random Forest classifier
-rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
-rf_classifier.fit(X_train, y_train)
-rf_accuracy = accuracy_score(y_test, rf_classifier.predict(X_test))
+# # Train Random Forest classifier
+# rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+# rf_classifier.fit(X_train, y_train)
+# rf_accuracy = accuracy_score(y_test, rf_classifier.predict(X_test))
 
-# Train K Nearest Neighbors classifier
-knn_classifier = KNeighborsClassifier()
-knn_classifier.fit(X_train, y_train)
-knn_accuracy = accuracy_score(y_test, knn_classifier.predict(X_test))
+# # Train K Nearest Neighbors classifier
+# knn_classifier = KNeighborsClassifier()
+# knn_classifier.fit(X_train, y_train)
+# knn_accuracy = accuracy_score(y_test, knn_classifier.predict(X_test))
 
-# Train Support Vector Machine classifier
-svm_classifier = SVC(kernel='rbf', random_state=42)
-svm_classifier.fit(X_train, y_train)
-svm_accuracy = accuracy_score(y_test, svm_classifier.predict(X_test))
+# # Train Support Vector Machine classifier
+# svm_classifier = SVC(kernel='rbf', random_state=42)
+# svm_classifier.fit(X_train, y_train)
+# svm_accuracy = accuracy_score(y_test, svm_classifier.predict(X_test))
 
-# Train Logistic Regression classifier
-logreg_classifier = LogisticRegression(random_state=42)
-logreg_classifier.fit(X_train, y_train)
-logreg_accuracy = accuracy_score(y_test, logreg_classifier.predict(X_test))
+# # Train Logistic Regression classifier
+# logreg_classifier = LogisticRegression(random_state=42)
+# logreg_classifier.fit(X_train, y_train)
+# logreg_accuracy = accuracy_score(y_test, logreg_classifier.predict(X_test))
 
-# Determine the classifier with the highest accuracy
-classifiers = {'Random Forest': rf_accuracy, 'K Nearest Neighbors': knn_accuracy,
-               'Support Vector Machine': svm_accuracy, 'Logistic Regression': logreg_accuracy}
-best_classifier = max(classifiers, key=classifiers.get)
+# # Determine the classifier with the highest accuracy
+# classifiers = {'Random Forest': rf_accuracy, 'K Nearest Neighbors': knn_accuracy,
+#                'Support Vector Machine': svm_accuracy, 'Logistic Regression': logreg_accuracy}
+# best_classifier = max(classifiers, key=classifiers.get)
 
 @app.route('/')
 def index():
@@ -74,20 +74,21 @@ def predict():
         
         # Prepare input data for prediction
         input_data = np.array([[credit_score, age, tenure, balance, num_of_products, has_credit_card, is_active_member, estimated_salary, 0, 0, 1]])
-        
+        print(input_data)
+
         # Use the best classifier for prediction
-        if best_classifier == 'Random Forest':
-            churn_prediction = rf_classifier.predict(scaler.transform(input_data))
-        elif best_classifier == 'K Nearest Neighbors':
-            churn_prediction = knn_classifier.predict(scaler.transform(input_data))
-        elif best_classifier == 'Support Vector Machine':
-            churn_prediction = svm_classifier.predict(scaler.transform(input_data))
-        elif best_classifier == 'Logistic Regression':
-            churn_prediction = logreg_classifier.predict(scaler.transform(input_data))
+        # if best_classifier == 'Random Forest':
+        #     churn_prediction = rf_classifier.predict(scaler.transform(input_data))
+        # elif best_classifier == 'K Nearest Neighbors':
+        #     churn_prediction = knn_classifier.predict(scaler.transform(input_data))
+        # elif best_classifier == 'Support Vector Machine':
+        #     churn_prediction = svm_classifier.predict(scaler.transform(input_data))
+        # elif best_classifier == 'Logistic Regression':
+        #     churn_prediction = logreg_classifier.predict(scaler.transform(input_data))
         
-        offers = generate_retention_offers(input_data)
-        print("Generated offers:", offers)  # Debug print statement
-        return render_template('result.html', churn_prediction=churn_prediction[0], offers=offers)
+        # offers = generate_retention_offers(input_data)
+        # print("Generated offers:", offers)  # Debug print statement
+        # return render_template('result.html', churn_prediction=churn_prediction[0], offers=offers)
     
     except Exception as e:
         return render_template('result.html', error_message=str(e))
